@@ -17,6 +17,7 @@ public class VectorTimestamp {
 		for (int i = 0; i < ts.length; i++) {
 			ts[i] = Integer.parseInt(dum[i]);
 		}
+		this.timestamp = ts;
 	}
 	
 	/**
@@ -36,6 +37,10 @@ public class VectorTimestamp {
 	 */
 	public int[] getTimestamp() {
 		return timestamp;
+	}
+	
+	public void resetTimestamp(int region) {
+		this.timestamp[region] = 0;
 	}
 	
 	/**

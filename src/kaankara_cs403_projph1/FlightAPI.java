@@ -27,7 +27,6 @@ public class FlightAPI {
 			@QueryParam("vt") String vt) {
 		if (pnr != 0 && passengerName != null) {
 			
-			management.checkTimestamp(vt);
 			
 			Passenger passenger = management.getPassenger(pnr);
 			if (passenger == null)
@@ -81,7 +80,7 @@ public class FlightAPI {
 					message += ", " + ticketList.get(i);
 			}
 			message += " TicketAmount:" + passenger.getTicketList().size();
-			message += management.getTimestamp();
+			message += " Timestamp:" + management.getTimestamp(passenger.getPnr());
 			return message;
 		}
 		message += "Error:" + status;
@@ -94,7 +93,6 @@ public class FlightAPI {
 			@QueryParam("flightNum") String flightNum, @QueryParam("ticketAmount") String ticketAmount,
 			@QueryParam("vt") String vt) {
 		
-		management.checkTimestamp(vt);
 		Passenger passenger = management.getPassenger(pnr);
 		String message = "";
 		
@@ -125,16 +123,18 @@ public class FlightAPI {
 			}else
 				message += "Flight Number is not provided\n";
 			
-			
+			//TODO: Does not update passenger object
 			if (ticketAmount != null) {
 				if (Integer.parseInt(ticketAmount) < passenger.getTicketList().size()) {
 					for (int i = 0; i < passenger.getTicketList().size() - Integer.parseInt(ticketAmount); i++) {
 						management.cancelTicket(passenger.getTicketList().get(passenger.getTicketList().size()-i -1), Integer.parseInt(flightNum));
 					}
+					passenger = management.getPassenger(pnr);
 					message += "Ticket amount reduced to: " + passenger.getTicketList().size();
 				}else if (Integer.parseInt(ticketAmount) > passenger.getTicketList().size()) {
 					management.sellTicket(passenger.getFlightNum(), Integer.parseInt(ticketAmount) - passenger.getTicketList().size(), passenger.getPassengerName());
-					message += "Ticket amount increased to " + passenger.getTicketList().size() + Integer.parseInt(ticketAmount) + "\n";
+					passenger = management.getPassenger(pnr);
+					message += "Ticket amount increased from: " + passenger.getTicketList().size() + " to:" + Integer.parseInt(ticketAmount) + "\n";
 				}else {
 					message += "No change in ticket amount";
 				}
@@ -143,6 +143,7 @@ public class FlightAPI {
 		}else
 			message += "Customer does not exist.";
 		
+		message += "\nTimestamp:" + management.getTimestamp(pnr);
 		
 		return message;
 	}
@@ -151,12 +152,12 @@ public class FlightAPI {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteTicket (@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName,
 			@QueryParam("vt") String vt) {
-		management.checkTimestamp(vt);
+		
 		Passenger passenger = management.getPassenger(pnr);
 		for (int i = 0; i < passenger.getTicketList().size(); i++) {
 			management.cancelTicket(passenger.getTicketList().get(i), passenger.getFlightNum());
 		}
 		management.deletePassenger(pnr);
-		return "Ticket(s)canceled.";
+		return "Ticket(s)canceled." + "\nTimestamp:" + management.getTimestamp(pnr);
 	}
 }
