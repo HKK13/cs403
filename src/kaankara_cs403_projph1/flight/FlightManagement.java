@@ -10,6 +10,10 @@ public class FlightManagement {
 	private static ArrayList<Passenger> passengerList;
 	private static ArrayList<Integer> pnrList;
 	
+	/**
+	 * Construct a management object to manage all flight related
+	 * functions.
+	 */
 	public FlightManagement() {
 		FlightManagement.pnrList = new ArrayList<>();
 		FlightManagement.flightList = new ArrayList<>();
@@ -19,6 +23,11 @@ public class FlightManagement {
 		}
 	}
 	
+	/**
+	 * Get flight corresponding to the flight number provided.
+	 * @param flightNum
+	 * @return
+	 */
 	public Flight getFlight(int flightNum) {
 	
 		for (int i = 0; i < 10; i++) {
@@ -29,6 +38,13 @@ public class FlightManagement {
 		return null;
 	}
 	
+	/**
+	 * Sells ticket to the customer with the information provided.
+	 * @param flightNum
+	 * @param ticketNum
+	 * @param passengerName
+	 * @return
+	 */
 	public synchronized String sellTicket (int flightNum, int ticketNum, String passengerName) {
 		for (int i = 0; i < 10; i++) {
 			if (flightList.get(i).getFlightNum() == flightNum) {
@@ -61,10 +77,19 @@ public class FlightManagement {
 		return "No Flight Exist.";
 	}
 	
+	/**
+	 * Returns all of the existing flights.
+	 * @return
+	 */
 	public ArrayList getFlightList() {
 		return this.flightList;
 	}
 	
+	/**
+	 * Generate ticket number for a single customer.
+	 * @param flight
+	 * @return
+	 */
 	public synchronized int generateTicket(Flight flight) {
 		int ticketNum = -1;
 		while(!flight.getTicketList().contains(ticketNum = new Random().nextInt(50) + 1)) {
@@ -73,6 +98,13 @@ public class FlightManagement {
 		return ticketNum;
 	}
 	
+	/**
+	 * Cancels a single ticket corresponding to the ticket number of 
+	 * a flight that are provided.
+	 * @param ticketNum
+	 * @param flightNum
+	 * @return
+	 */
 	public synchronized boolean cancelTicket(int ticketNum, int flightNum) {
 		for (int i = 0; i < 10; i++) {
 			if (flightList.get(i).getFlightNum() == flightNum) {
@@ -85,6 +117,11 @@ public class FlightManagement {
 		return false;
 	}
 	
+	/**
+	 * Returns the tickets of the passenger.
+	 * @param passengerName
+	 * @return
+	 */
 	public ArrayList<Integer> findTickets (String passengerName) {
 		
 		for (int i = 0; i < 10; i++) {
@@ -95,6 +132,11 @@ public class FlightManagement {
 		return null;
 	}
 	
+	/**
+	 * Gets the passenger object by its unique pnr number.
+	 * @param pnr
+	 * @return
+	 */
 	public Passenger getPassenger(int pnr) {
 		for (int i = 0; i < passengerList.size(); i++) {
 			if (passengerList.get(i).getPnr() == pnr)
@@ -104,6 +146,12 @@ public class FlightManagement {
 		return null;
 	}
 	
+	/**
+	 * Returns customer finding it by name
+	 * This method is not guaranteed to find the exact customer.
+	 * @param passengerName
+	 * @return
+	 */
 	public Passenger getPassenger(String passengerName) {
 		for (int i = 0; i < passengerList.size(); i++) {
 			if (passengerList.get(i).getPassengerName() == passengerName)
@@ -113,6 +161,12 @@ public class FlightManagement {
 		return null;
 	}
 	
+	/**
+	 * Updates the passenger with the provided pnr number
+	 * with the provided passenger object. 
+	 * @param pnr
+	 * @param passenger
+	 */
 	public void updatePassenger (int pnr, Passenger passenger) {
 		for(int i = 0; i < passengerList.size(); i++) {
 			if (passengerList.get(i).getPnr() == pnr) {
@@ -121,6 +175,10 @@ public class FlightManagement {
 		}
 	}
 	
+	/**
+	 * Deletes passenger.
+	 * @param pnr
+	 */
 	public void deletePassenger (int pnr) {
 		passengerList.remove(getPassenger(pnr));
 	}
