@@ -7,6 +7,10 @@ public class VectorTimestamp {
 		timestamp = new int[length];
 	}
 	
+	public VectorTimestamp(int[] timestamp) {
+		this.timestamp = timestamp; 
+	}
+	
 	/**
 	 * Increases specified part of the timestamp.
 	 * 0 = flight
