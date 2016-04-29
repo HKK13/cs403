@@ -23,7 +23,8 @@ public class FlightAPI {
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getFlight(@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName) {
+	public String getFlight(@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName,
+			@QueryParam("vt") int[] vt) {
 		if (pnr != 0 && passengerName != null) {
 			
 			Passenger passenger = management.getPassenger(pnr);
@@ -56,7 +57,8 @@ public class FlightAPI {
 	
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public String buyTicket(@QueryParam("passengerName") String passengerName, @QueryParam("flightNum") int flightNum, @QueryParam("ticketAmount") int ticketAmount) {
+	public String buyTicket(@QueryParam("passengerName") String passengerName, @QueryParam("flightNum") int flightNum, 
+			@QueryParam("ticketAmount") int ticketAmount, @QueryParam("vt") int[] vt) {
 
 		String status = management.sellTicket(flightNum, ticketAmount, passengerName);
 		String message = "";
@@ -86,7 +88,8 @@ public class FlightAPI {
 	@PUT
 	@Produces(MediaType.TEXT_PLAIN)
 	public String updateTicket (@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName, 
-			@QueryParam("flightNum") String flightNum, @QueryParam("ticketAmount") String ticketAmount) {
+			@QueryParam("flightNum") String flightNum, @QueryParam("ticketAmount") String ticketAmount,
+			@QueryParam("vt") int[] vt) {
 		Passenger passenger = management.getPassenger(pnr);
 		String message = "";
 		
@@ -141,7 +144,8 @@ public class FlightAPI {
 	
 	@DELETE
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteTicket (@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName) {
+	public String deleteTicket (@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName,
+			@QueryParam("vt") int[] vt) {
 		Passenger passenger = management.getPassenger(pnr);
 		for (int i = 0; i < passenger.getTicketList().size(); i++) {
 			management.cancelTicket(passenger.getTicketList().get(i), passenger.getFlightNum());
