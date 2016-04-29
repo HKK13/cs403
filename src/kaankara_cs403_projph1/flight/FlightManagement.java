@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import kaankara_cs403_projph1.passenger.Passenger;
+import kaankara_cs403_projph1.timestamp.VectorTimestamp;
 
 public class FlightManagement {
 	private static ArrayList<Flight> flightList ;
 	private static ArrayList<Passenger> passengerList;
 	private static ArrayList<Integer> pnrList;
+	private static VectorTimestamp timestamp;
 	
 	/**
 	 * Construct a management object to manage all flight related
@@ -18,6 +20,7 @@ public class FlightManagement {
 		FlightManagement.pnrList = new ArrayList<>();
 		FlightManagement.flightList = new ArrayList<>();
 		FlightManagement.passengerList = new ArrayList<>();
+		timestamp = new VectorTimestamp(3);
 		for (int i = 100; i < 110; i++) {
 			flightList.add(new Flight(i));
 		}
@@ -29,7 +32,7 @@ public class FlightManagement {
 	 * @return
 	 */
 	public Flight getFlight(int flightNum) {
-	
+		
 		for (int i = 0; i < 10; i++) {
 			if (flightList.get(i).getFlightNum() == flightNum) {
 				return flightList.get(i);
@@ -67,6 +70,7 @@ public class FlightManagement {
 						tickets += newTicket;
 					}
 					
+					timestamp.increaseTimeOf(0);
 					return "OK";
 					
 				}else {
@@ -110,6 +114,7 @@ public class FlightManagement {
 			if (flightList.get(i).getFlightNum() == flightNum) {
 				flightList.get(i).cancelTicket(ticketNum);
 				flightList.get(i).setEmptySeats(flightList.get(i).getEmptySeats() + 1);
+				timestamp.increaseTimeOf(0);
 				return true;
 			}
 		}
@@ -171,6 +176,7 @@ public class FlightManagement {
 		for(int i = 0; i < passengerList.size(); i++) {
 			if (passengerList.get(i).getPnr() == pnr) {
 				passengerList.set(i, passenger);
+				timestamp.increaseTimeOf(0);
 			}
 		}
 	}
@@ -181,5 +187,16 @@ public class FlightManagement {
 	 */
 	public void deletePassenger (int pnr) {
 		passengerList.remove(getPassenger(pnr));
+		timestamp.increaseTimeOf(0);
+	}
+	
+	/**
+	 * Checks timestamp for the management methods.
+	 * @param vt
+	 * @return boolean
+	 */
+	public boolean checkTimestamp(int[] vt) {
+		//TODO If is not equal get data from other servers.
+		return timestamp.equals(new VectorTimestamp(vt));
 	}
 }

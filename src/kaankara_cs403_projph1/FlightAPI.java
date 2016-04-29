@@ -26,6 +26,7 @@ public class FlightAPI {
 	public String getFlight(@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName,
 			@QueryParam("vt") int[] vt) {
 		if (pnr != 0 && passengerName != null) {
+			management.checkTimestamp(vt);
 			
 			Passenger passenger = management.getPassenger(pnr);
 			if (passenger == null)
@@ -60,6 +61,7 @@ public class FlightAPI {
 	public String buyTicket(@QueryParam("passengerName") String passengerName, @QueryParam("flightNum") int flightNum, 
 			@QueryParam("ticketAmount") int ticketAmount, @QueryParam("vt") int[] vt) {
 
+		management.checkTimestamp(vt);
 		String status = management.sellTicket(flightNum, ticketAmount, passengerName);
 		String message = "";
 		
@@ -90,6 +92,8 @@ public class FlightAPI {
 	public String updateTicket (@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName, 
 			@QueryParam("flightNum") String flightNum, @QueryParam("ticketAmount") String ticketAmount,
 			@QueryParam("vt") int[] vt) {
+		
+		management.checkTimestamp(vt);
 		Passenger passenger = management.getPassenger(pnr);
 		String message = "";
 		
@@ -146,6 +150,7 @@ public class FlightAPI {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteTicket (@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName,
 			@QueryParam("vt") int[] vt) {
+		management.checkTimestamp(vt);
 		Passenger passenger = management.getPassenger(pnr);
 		for (int i = 0; i < passenger.getTicketList().size(); i++) {
 			management.cancelTicket(passenger.getTicketList().get(i), passenger.getFlightNum());
