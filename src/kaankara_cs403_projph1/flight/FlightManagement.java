@@ -1,7 +1,9 @@
-package kaankara_cs403_projph1;
+package kaankara_cs403_projph1.flight;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Random;
+
+import kaankara_cs403_projph1.passenger.Passenger;
 
 public class FlightManagement {
 	private static ArrayList<Flight> flightList ;

@@ -1,4 +1,4 @@
-package kaankara_cs403_projph1;
+package kaankara_cs403_projph1.flight;
 import java.io.Serializable;
 import java.util.ArrayList;
 

@@ -11,6 +11,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import kaankara_cs403_projph1.flight.Flight;
+import kaankara_cs403_projph1.flight.FlightManagement;
+import kaankara_cs403_projph1.flight.ManagementInstance;
+import kaankara_cs403_projph1.passenger.Passenger;
+
 @Path("/flight")
 public class FlightAPI {
 	
