@@ -25,4 +25,24 @@ public class VectorTimestamp {
 	public int[] getTimestamp() {
 		return timestamp;
 	}
+	
+	/**
+	 * Checks whether two VectorTimestamps are equal.
+	 * @param timestamp
+	 * @return
+	 */
+	public boolean isEqual(VectorTimestamp timestamp) {
+		
+		if(timestamp.getTimestamp() != null && timestamp.getTimestamp().length != this.timestamp.length) {
+			return false;
+		}
+		
+		int[] dummyTimestamp = timestamp.getTimestamp();
+		for (int i = 0; i < this.timestamp.length; i++) {
+			if (this.timestamp[i] != dummyTimestamp[i])
+				return false;
+		}
+		
+		return true;
+	}
 }
