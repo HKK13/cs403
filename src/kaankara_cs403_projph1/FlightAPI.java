@@ -24,8 +24,9 @@ public class FlightAPI {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getFlight(@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName,
-			@QueryParam("vt") int[] vt) {
+			@QueryParam("vt") String vt) {
 		if (pnr != 0 && passengerName != null) {
+			
 			management.checkTimestamp(vt);
 			
 			Passenger passenger = management.getPassenger(pnr);
@@ -59,9 +60,8 @@ public class FlightAPI {
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	public String buyTicket(@QueryParam("passengerName") String passengerName, @QueryParam("flightNum") int flightNum, 
-			@QueryParam("ticketAmount") int ticketAmount, @QueryParam("vt") int[] vt) {
+			@QueryParam("ticketAmount") int ticketAmount) {
 
-		management.checkTimestamp(vt);
 		String status = management.sellTicket(flightNum, ticketAmount, passengerName);
 		String message = "";
 		
@@ -81,6 +81,7 @@ public class FlightAPI {
 					message += ", " + ticketList.get(i);
 			}
 			message += " TicketAmount:" + passenger.getTicketList().size();
+			message += management.getTimestamp();
 			return message;
 		}
 		message += "Error:" + status;
@@ -91,7 +92,7 @@ public class FlightAPI {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String updateTicket (@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName, 
 			@QueryParam("flightNum") String flightNum, @QueryParam("ticketAmount") String ticketAmount,
-			@QueryParam("vt") int[] vt) {
+			@QueryParam("vt") String vt) {
 		
 		management.checkTimestamp(vt);
 		Passenger passenger = management.getPassenger(pnr);
@@ -149,7 +150,7 @@ public class FlightAPI {
 	@DELETE
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteTicket (@QueryParam("pnr") int pnr, @QueryParam("passengerName") String passengerName,
-			@QueryParam("vt") int[] vt) {
+			@QueryParam("vt") String vt) {
 		management.checkTimestamp(vt);
 		Passenger passenger = management.getPassenger(pnr);
 		for (int i = 0; i < passenger.getTicketList().size(); i++) {

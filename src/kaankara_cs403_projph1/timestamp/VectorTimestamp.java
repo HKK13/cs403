@@ -11,6 +11,14 @@ public class VectorTimestamp {
 		this.timestamp = timestamp; 
 	}
 	
+	public VectorTimestamp(String timestamp) {
+		String[] dum = timestamp.split(",");
+		int[] ts = new int[dum.length];
+		for (int i = 0; i < ts.length; i++) {
+			ts[i] = Integer.parseInt(dum[i]);
+		}
+	}
+	
 	/**
 	 * Increases specified part of the timestamp.
 	 * 0 = flight

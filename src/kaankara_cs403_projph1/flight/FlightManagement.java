@@ -199,4 +199,20 @@ public class FlightManagement {
 		//TODO If is not equal get data from other servers.
 		return timestamp.equals(new VectorTimestamp(vt));
 	}
+	
+	public boolean checkTimestamp(String vt) {
+		//TODO If is not equal get data from other servers.
+		return timestamp.equals(new VectorTimestamp(vt));
+	}
+	
+	public String getTimestamp() {
+		String vts = "";
+		int[] dummy = this.timestamp.getTimestamp();
+		for (int i = 0; i < this.timestamp.getTimestamp().length; i++) {
+			if (i == 0) 
+				vts += dummy[i];
+			vts += ", " + dummy[i];
+		}
+		return vts;
+	}
 }
