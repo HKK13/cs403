@@ -47,7 +47,7 @@ public class RentalAPI {
 			return "Faulty info.";
 		
 		if (flightManagement.getPassenger(pnr) == null)
-			return "No customer exists.";
+			return "No customer exists. Cannot make any car rent";
 		VectorTimestamp vts = new VectorTimestamp(vt);
 		
 		

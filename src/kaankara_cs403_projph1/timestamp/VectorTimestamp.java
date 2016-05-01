@@ -62,4 +62,11 @@ public class VectorTimestamp {
 		
 		return true;
 	}
+	
+	public boolean isValid (VectorTimestamp timestamp)
+	{
+		
+		
+		return true;
+	}
 }

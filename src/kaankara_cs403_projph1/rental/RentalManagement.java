@@ -2,8 +2,6 @@ package kaankara_cs403_projph1.rental;
 
 import java.util.ArrayList;
 
-import kaankara_cs403_projph1.hotel.Hotel;
-import kaankara_cs403_projph1.hotel.HotelReservation;
 import kaankara_cs403_projph1.passenger.PassengerTimestamp;
 import kaankara_cs403_projph1.timestamp.VectorTimestamp;
 
