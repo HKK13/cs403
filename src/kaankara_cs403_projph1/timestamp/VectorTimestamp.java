@@ -50,7 +50,7 @@ public class VectorTimestamp {
 	 */
 	public boolean isEqual(VectorTimestamp timestamp) {
 		
-		if(timestamp.getTimestamp() != null && timestamp.getTimestamp().length != this.timestamp.length) {
+		if(timestamp.getTimestamp() != null && timestamp.getTimestamp().length != this.timestamp.length&& IsConcurrent(timestamp)==false) {
 			return false;
 		}
 		
@@ -63,10 +63,22 @@ public class VectorTimestamp {
 		return true;
 	}
 	
-	public boolean isValid (VectorTimestamp timestamp)
+	public boolean IsConcurrent(VectorTimestamp timestamp)
 	{
-		
-		
-		return true;
+		boolean greater=false, less=false;
+		int[] v = timestamp.getTimestamp();
+		int[] w = this.getTimestamp();
+
+		for (int i=0; i < this.timestamp.length; i++) 
+			if (v[i] < w[i])
+				greater = true;
+			else
+				less = true;
+		if (greater && less)
+			return true;	
+		else
+			return false;
 	}
+
+	
 }
